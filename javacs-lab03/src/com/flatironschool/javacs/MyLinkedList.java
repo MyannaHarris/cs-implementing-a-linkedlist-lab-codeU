@@ -86,6 +86,28 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public void add(int index, E element) {
 		// TODO: fill this in
+                if (index < 0 || index > size) {
+			throw new IndexOutOfBoundsException();
+		}
+                if (index == 0)
+                {
+                  Node temp = new Node(element,head);
+                  head = temp;
+                  size++;
+                }
+                else
+                {
+                  Node temp = new Node(element,head);
+                  Node curr = head;
+                  for(int i=1; i< index; i++)
+                  {
+                    curr = curr.next;
+                  }
+                  Node temp2 = curr.next;
+                  curr.next = temp;
+                  temp.next = temp2;
+                  size++;
+                }
 	}
 
 	@Override
@@ -147,6 +169,20 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public int indexOf(Object target) {
 		// TODO: fill this in
+                int idx = 0;
+                Node curr = head;
+                while(curr != null)
+                {
+                  if(equals(target,curr.cargo))
+                  {
+                     return idx;
+                  }
+                  else
+                  {
+                    idx++;
+                    curr = curr.next;
+                  }
+                }
 		return -1;
 	}
 
@@ -202,7 +238,28 @@ public class MyLinkedList<E> implements List<E> {
 	@Override
 	public boolean remove(Object obj) {
 		// TODO: fill this in
-		return false;
+        if (equals(head.cargo,obj))
+        {
+          head = head.next;
+          size--;
+          return true;
+        }
+        else
+        {
+                  Node curr = head;
+                  for(int i=1; i< size; i++)
+                  {
+                    Node temp = curr.next;
+                    if(equals(temp.cargo,obj))
+                    {
+                      curr.next = temp.next;
+                      size--;
+                      return true;
+                    }
+                    curr = curr.next;
+                  }
+        }
+        return false;
 	}
 
 	@Override
